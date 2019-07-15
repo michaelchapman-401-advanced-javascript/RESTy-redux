@@ -11,6 +11,9 @@ import ClipBoard from '../clipboard';
 import History from '../history';
 import Form from '../form';
 
+/**
+ * RESTy class which handles all methods and state and renders History, ClipBoard, and Form components
+ */
 class RESTy extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +31,9 @@ class RESTy extends React.Component {
     };
   }
 
+  /**
+   * componentDidMount() which gets history from local storage and sets the history state object
+   */
   componentDidMount() {
     try {
       let history = JSON.parse(localStorage.getItem('history'));
@@ -37,10 +43,16 @@ class RESTy extends React.Component {
     }
   }
 
+  /**
+   * saveHistory() method which sets history to local storage
+   */
   saveHistory = () => {
     localStorage.setItem('history', JSON.stringify(this.state.history));
   };
 
+  /**
+   * updateHistory() method which handles setting the history state
+   */
   updateHistory = () => {
     let url = new URL(this.state.url);
 
@@ -64,12 +76,18 @@ class RESTy extends React.Component {
     this.saveHistory();
   };
 
+  /**
+   * resetFormFromHistory(event) method which resets the history state
+   */
   resetFormFromHistory = event => {
     event.preventDefault();
     let newState = this.state.history[event.currentTarget.id];
     this.setState({ ...newState });
   };
 
+  /**
+   * handleChange(event) method which handles changing most state in application
+   */
   handleChange = event => {
     let prop = event.target.name;
     let value = event.target.value;
@@ -88,11 +106,17 @@ class RESTy extends React.Component {
     }
   };
 
+  /**
+   * toggleHeaders method which handles toggling the Headers component on and off
+   */
   toggleHeaders = () => {
     let headersVisible = !this.state.headersVisible;
     this.setState({ headersVisible });
   };
 
+  /**
+   * callAPI(event) which handles making API requests 
+   */
   callAPI = event => {
     event.preventDefault();
 
@@ -125,8 +149,11 @@ class RESTy extends React.Component {
       });
   };
 
-  handleUrlChange = e => {
-    e.preventDefault();
+  /**
+   * handleURLChange(event) method which handles changing the url state in the redux store
+   */
+  handleUrlChange = event => {
+    event.preventDefault();
 
     console.log('URL_CHANGE');
 

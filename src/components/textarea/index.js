@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * TextArea class which handles rendering a basic textArea form input field
+ */
 export default class TextArea extends React.Component {
   render() {
     return (

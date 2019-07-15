@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * ClipBoard class which renders the ReactJson for the API responses
+ */
 export default class History extends React.Component {
   render() {
     return (

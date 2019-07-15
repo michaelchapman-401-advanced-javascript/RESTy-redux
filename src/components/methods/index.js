@@ -5,6 +5,9 @@ import Method from '../method';
 
 let REQUEST_METHODS = ['get', 'post', 'put', 'delete'];
 
+/**
+ * Methods class which renders a list of Method components
+ */
 export default class Methods extends React.Component {
   render() {
     return (

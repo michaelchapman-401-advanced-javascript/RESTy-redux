@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Headers class which renders the Headers input forms
+ */
 export default class Headers extends React.Component {
   render() {
     return (

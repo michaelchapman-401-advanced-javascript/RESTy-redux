@@ -5,6 +5,9 @@ import Url from '../url';
 import TextArea from '../textarea';
 import Methods from '../methods';
 
+/**
+ * Form class which renders the URL, Methods, TextArea, and Headers components
+ */
 export default class Form extends React.Component {
   render() {
     return (

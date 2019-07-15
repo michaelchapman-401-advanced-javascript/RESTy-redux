@@ -8,6 +8,9 @@ import App from './app.js';
 import createStore from './store/';
 const store = createStore();
 
+/**
+ * Main class which renders the app
+ */
 class Main extends React.Component {
   render() {
     return (

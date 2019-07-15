@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
 
+/**
+ * ClipBoard class which renders the ReactJson for the API responses
+ */
 export default class ClipBoard extends React.Component {
   render() {
     return (

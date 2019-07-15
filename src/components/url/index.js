@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Url class which renders basic text input field
+ */
 export default class Url extends React.Component {
   render() {
     return (
