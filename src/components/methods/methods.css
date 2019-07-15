@@ -1,0 +1,5 @@
+#methods input[type='radio']:checked + span {
+  background: #2d5986;
+  color: #eee;
+  border: 1px groove #ccc;
+}
