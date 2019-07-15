@@ -1,11 +1,12 @@
-let initialState = { foo: 'bar' };
+let initialState = { url: '' };
 
 export default (state = initialState, action) => {
   let { type, payload } = action;
 
   switch (type) {
-    case 'CHANGE':
-      return { foo: Math.random() };
+    case 'SET_URL':
+      console.log(payload);
+      return { url: payload };
 
     default:
       return state;

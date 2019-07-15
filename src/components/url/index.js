@@ -1,10 +1,6 @@
 import React from 'react';
 
 export default class Url extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <input
@@ -14,6 +10,7 @@ export default class Url extends React.Component {
         placeholder="URL"
         value={this.props.url}
         onChange={this.props.handleChange}
+        // onChange={this.props.handleUrlChange}
       />
     );
   }

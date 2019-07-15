@@ -1,16 +1,10 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-import thunk from "redux-thunk";
-
-import reporter from "./middleware/reporter.js";
-
-import recordsReducer from "./reducers.js";
+import reporter from './middleware/reporter.js';
+import Reducer from './reducers.js';
 
 let reducers = combineReducers({
-  records: recordsReducer
+  url: Reducer,
 });
 
-const store = () =>
-  createStore(reducers, composeWithDevTools(applyMiddleware(reporter, thunk)));
-export default store;
+export default () => createStore(reducers, applyMiddleware(reporter));

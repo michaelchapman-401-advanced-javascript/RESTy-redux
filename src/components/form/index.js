@@ -12,6 +12,7 @@ export default class Form extends React.Component {
         <section>
           
           <Url 
+            handleUrlChange={this.props.handleUrlChange}
             handleChange={this.props.handleChange}
             url={this.props.url}
           />

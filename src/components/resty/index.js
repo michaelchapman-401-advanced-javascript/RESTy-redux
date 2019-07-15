@@ -5,7 +5,7 @@ import superagent from 'superagent';
 import md5 from 'md5';
 import { connect } from "react-redux";
 
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 
 import ClipBoard from '../clipboard';
 import History from '../history';
@@ -125,6 +125,14 @@ class RESTy extends React.Component {
       });
   };
 
+  handleUrlChange = e => {
+    e.preventDefault();
+
+    console.log('URL_CHANGE');
+
+    this.props.change();
+  };
+
   render() {
     return (
       <main>
@@ -136,6 +144,7 @@ class RESTy extends React.Component {
           <Form 
             callAPI={this.callAPI}
             handleChange={this.handleChange}
+            handleUrlChange={this.handleUrlChange}
             toggleHeaders={this.toggleHeaders}
             url={this.state.url}
             method={this.state.method}

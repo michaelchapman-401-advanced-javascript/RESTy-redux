@@ -1,6 +1,6 @@
 export const changer = payload => {
   return {
-    type: 'CHANGE',
+    type: 'SET_URL',
     payload: payload,
   };
 };
