@@ -81,6 +81,8 @@ class SettingsProvider extends React.Component {
     let value = event.target.value;
     this.setState({ [prop]: value });
 
+    console.log(this.state.method);
+
     // If basic/bearer, clear the other
     if (prop === 'token') {
       let username = '';

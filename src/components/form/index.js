@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { SettingsContext } from '../../context/context';
 
 import Headers from '../headers';
 import Url from '../url';
@@ -8,44 +10,28 @@ import Methods from '../methods';
 /**
  * Form class which renders the URL, Methods, TextArea, and Headers components
  */
-export default class Form extends React.Component {
-  render() {
-    return (
-      <form onSubmit={this.props.callAPI}>
-        <section>
-          
-          <Url 
-            handleUrlChange={this.props.handleUrlChange}
-            handleChange={this.props.handleChange}
-            url={this.props.url}
-          />
+function Form() {
+  const state = useContext(SettingsContext);
 
-          <Methods 
-            methods={this.props.methods}
-            handleChange={this.props.handleChange}
-          />
+  return (
+    <form onSubmit={state.callAPI}>
+      <section>
+        
+        <Url />
 
-        </section>
+        <Methods />
 
-        <section className="deck col-2">
-         
-         <TextArea 
-           handleChange={this.props.handleChange}
-           method={this.props.method}
-           requestBody={this.props.requestBody}
-         />
+      </section>
 
-          <Headers 
-            toggleHeaders={this.props.toggleHeaders}
-            handleChange={this.props.handleChange}
-            headersVisible={this.props.headersVisible}
-            username={this.props.username}
-            password={this.props.password}
-            token={this.props.token}
-          />
+      <section className="deck col-2">
+        
+        <TextArea />
 
-        </section>
-      </form>
-    );
-  }
+        <Headers />
+
+      </section>
+    </form>
+  );
 }
+
+export default Form;

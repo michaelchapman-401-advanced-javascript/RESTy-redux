@@ -5,7 +5,7 @@ import { SettingsContext } from '../../context/context';
 /**
  * ClipBoard class which renders the ReactJson for the API responses
  */
-function History(props) {
+function History() {
   const state = useContext(SettingsContext);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function History(props) {
       <ul id="history">
         {state.history &&
           Object.keys(state.history).map(key => (
-            <li key={key} id={key} onClick={this.resetFormFromHistory}>
+            <li key={key} id={key} onClick={state.resetFormFromHistory}>
               <span>
                 <strong>{state.history[key].method}</strong>
               </span>

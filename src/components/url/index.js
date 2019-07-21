@@ -5,7 +5,7 @@ import { SettingsContext } from '../../context/context';
 /**
  * Url class which renders basic text input field
  */
-function Url(props) {
+function Url() {
   const state = useContext(SettingsContext);
   
   return (
