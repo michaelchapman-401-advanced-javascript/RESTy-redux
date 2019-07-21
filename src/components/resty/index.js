@@ -3,9 +3,6 @@ import './resty.css';
 import React from 'react';
 import superagent from 'superagent';
 import md5 from 'md5';
-import { connect } from "react-redux";
-
-import * as actions from "../../store/actions";
 
 import ClipBoard from '../clipboard';
 import History from '../history';
@@ -192,15 +189,4 @@ class RESTy extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  url: state.url
-});
-
-const mapDispatchToProps = (dispatch, getState) => ({
-  change: () => dispatch(actions.changer())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RESTy);
+export default RESTy;

@@ -13,7 +13,6 @@ export default class Url extends React.Component {
         placeholder="URL"
         value={this.props.url}
         onChange={this.props.handleChange}
-        // onChange={this.props.handleUrlChange}
       />
     );
   }
