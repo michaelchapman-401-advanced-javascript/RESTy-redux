@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Footer class which renders a basic footer
+ */
 class Footer extends React.Component {
   render() {
     return (

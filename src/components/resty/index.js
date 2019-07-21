@@ -2,9 +2,18 @@ import './resty.css';
 
 import React from 'react';
 import superagent from 'superagent';
-import ReactJson from 'react-json-view';
 import md5 from 'md5';
+import { connect } from "react-redux";
 
+import * as actions from "../../store/actions";
+
+import ClipBoard from '../clipboard';
+import History from '../history';
+import Form from '../form';
+
+/**
+ * RESTy class which handles all methods and state and renders History, ClipBoard, and Form components
+ */
 class RESTy extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +31,9 @@ class RESTy extends React.Component {
     };
   }
 
+  /**
+   * componentDidMount() which gets history from local storage and sets the history state object
+   */
   componentDidMount() {
     try {
       let history = JSON.parse(localStorage.getItem('history'));
@@ -31,10 +43,16 @@ class RESTy extends React.Component {
     }
   }
 
+  /**
+   * saveHistory() method which sets history to local storage
+   */
   saveHistory = () => {
     localStorage.setItem('history', JSON.stringify(this.state.history));
   };
 
+  /**
+   * updateHistory() method which handles setting the history state
+   */
   updateHistory = () => {
     let url = new URL(this.state.url);
 
@@ -58,12 +76,18 @@ class RESTy extends React.Component {
     this.saveHistory();
   };
 
+  /**
+   * resetFormFromHistory(event) method which resets the history state
+   */
   resetFormFromHistory = event => {
     event.preventDefault();
     let newState = this.state.history[event.currentTarget.id];
     this.setState({ ...newState });
   };
 
+  /**
+   * handleChange(event) method which handles changing most state in application
+   */
   handleChange = event => {
     let prop = event.target.name;
     let value = event.target.value;
@@ -82,11 +106,17 @@ class RESTy extends React.Component {
     }
   };
 
+  /**
+   * toggleHeaders method which handles toggling the Headers component on and off
+   */
   toggleHeaders = () => {
     let headersVisible = !this.state.headersVisible;
     this.setState({ headersVisible });
   };
 
+  /**
+   * callAPI(event) which handles making API requests 
+   */
   callAPI = event => {
     event.preventDefault();
 
@@ -119,158 +149,58 @@ class RESTy extends React.Component {
       });
   };
 
+  /**
+   * handleURLChange(event) method which handles changing the url state in the redux store
+   */
+  handleUrlChange = event => {
+    event.preventDefault();
+
+    console.log('URL_CHANGE');
+
+    this.props.change();
+  };
+
   render() {
     return (
       <main>
-        <aside>
-          <h2>History</h2>
-          <ul id="history">
-            {this.state.history &&
-              Object.keys(this.state.history).map(key => (
-                <li key={key} id={key} onClick={this.resetFormFromHistory}>
-                  <span>
-                    <strong>{this.state.history[key].method}</strong>
-                  </span>
-                  <span>{this.state.history[key].host}</span>
-                  <span>{this.state.history[key].path}</span>
-                </li>
-              ))}
-          </ul>
-        </aside>
+        <History
+          history={this.state.history}
+        />
+
         <section className="deck">
-          <form onSubmit={this.callAPI}>
-            <section>
-              <input
-                type="text"
-                className="wide"
-                name="url"
-                placeholder="URL"
-                value={this.state.url}
-                onChange={this.handleChange}
-              />
+          <Form 
+            callAPI={this.callAPI}
+            handleChange={this.handleChange}
+            handleUrlChange={this.handleUrlChange}
+            toggleHeaders={this.toggleHeaders}
+            url={this.state.url}
+            method={this.state.method}
+            requestBody={this.state.requestBody}
+            headersVisible={this.state.headersVisible}
+            username={this.state.username}
+            password={this.state.password}
+            token={this.state.token}
+          />
 
-              <div id="methods">
-                <label>
-                  <input
-                    type="radio"
-                    name="method"
-                    checked={this.state.method === 'get' ? true : false}
-                    value="get"
-                    onChange={this.handleChange}
-                  />
-                  <span>GET</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="method"
-                    checked={this.state.method === 'post' ? true : false}
-                    value="post"
-                    onChange={this.handleChange}
-                  />
-                  <span>POST</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="method"
-                    checked={this.state.method === 'put' ? true : false}
-                    value="put"
-                    onChange={this.handleChange}
-                  />
-                  <span>PUT</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="method"
-                    checked={this.state.method === 'patch' ? true : false}
-                    value="patch"
-                    onChange={this.handleChange}
-                  />
-                  <span>PATCH</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="method"
-                    checked={this.state.method === 'delete' ? true : false}
-                    value="delete"
-                    onChange={this.handleChange}
-                  />
-                  <span>DELETE</span>
-                </label>
-                <label>
-                  <button type="submit">Go!</button>
-                </label>
-              </div>
-            </section>
-
-            <section className="deck col-2">
-              <div id="body">
-                <textarea
-                  placeholder="Raw JSON Body"
-                  name="requestBody"
-                  onChange={this.handleChange}
-                  value={this.state.requestBody}
-                  disabled={
-                    this.state.method.match(/get|delete/) ? true : false
-                  }
-                />
-              </div>
-
-              <div id="headers">
-                <button onClick={this.toggleHeaders}>
-                  Headers
-                </button>
-                <div className={'visible-' + this.state.headersVisible}>
-                  <h2>Basic Authorization</h2>
-                  <input
-                    onChange={this.handleChange}
-                    name="username"
-                    placeholder="Username"
-                    value={this.state.username}
-                  />
-                  <input
-                    onChange={this.handleChange}
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={this.state.password}
-                  />
-                </div>
-                <div className={'visible-' + this.state.headersVisible}>
-                  <h2>Bearer Token</h2>
-                  <input
-                    onChange={this.handleChange}
-                    type="text"
-                    className="wide"
-                    name="token"
-                    placeholder="Token"
-                    value={this.state.token}
-                  />
-                </div>
-              </div>
-            </section>
-          </form>
-          <div id="json">
-            <ReactJson
-              name="Headers"
-              enableClipboard={false}
-              collapsed={true}
-              src={this.state.header}
-            />
-            <ReactJson
-              name="Response"
-              enableClipboard={false}
-              collapsed={false}
-              src={this.state.body}
-            />
-          </div>
+          <ClipBoard 
+            body={this.state.body}
+            header={this.state.header}
+          />
         </section>
       </main>
     );
   }
 }
 
-export default RESTy;
+const mapStateToProps = state => ({
+  url: state.url
+});
+
+const mapDispatchToProps = (dispatch, getState) => ({
+  change: () => dispatch(actions.changer())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RESTy);

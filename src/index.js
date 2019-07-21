@@ -1,16 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import App from './app.js';
 
+import createStore from './store/';
+const store = createStore();
+
+/**
+ * Main class which renders the app
+ */
 class Main extends React.Component {
   render() {
     return (
-      // Provider store wraps this
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
