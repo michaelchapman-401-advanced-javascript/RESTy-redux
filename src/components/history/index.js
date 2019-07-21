@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import { SettingsContext } from '../../context/context';
 
 /**
  * ClipBoard class which renders the ReactJson for the API responses
  */
-export default class History extends React.Component {
-  render() {
-    return (
-      <aside>
-        <h2>History</h2>
-        <ul id="history">
-          {this.props.history &&
-            Object.keys(this.props.history).map(key => (
-              <li key={key} id={key} onClick={this.resetFormFromHistory}>
-                <span>
-                  <strong>{this.props.history[key].method}</strong>
-                </span>
-                <span>{this.props.history[key].host}</span>
-                <span>{this.props.history[key].path}</span>
-              </li>
-            ))}
-        </ul>
-      </aside>
-    );
-  }
+function History() {
+  const state = useContext(SettingsContext);
+
+  useEffect(() => {
+    try {
+      let history = JSON.parse(localStorage.getItem('history'));
+      if(history) state.saveHistory(history);
+    } catch (e) {
+      console.error(e);
+    };
+  }, []);
+  
+  return (
+    <aside>
+      <h2>History</h2>
+      <ul id="history">
+        {state.history &&
+          Object.keys(state.history).map(key => (
+            <li key={key} id={key} onClick={state.resetFormFromHistory}>
+              <span>
+                <strong>{state.history[key].method}</strong>
+              </span>
+              <span>{state.history[key].host}</span>
+              <span>{state.history[key].path}</span>
+            </li>
+          ))}
+      </ul>
+    </aside>
+  );
 }
+
+export default History;

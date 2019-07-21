@@ -15,6 +15,7 @@ Michael Chapman
 - [UML-Data-Flow](./assets/preplanning.jpg)
 - [UML-Data-Flow](./assets/preplanning2.jpg)
 - [UML-Data-Flow](./assets/preplanning3.jpg)
+- [UML-Data-Flow](./assets/preplanning4.jpg)
 
 ## Modules
 
@@ -57,6 +58,9 @@ app.js - Renders all components
 
 - - Method
 - - - method/index.js - Method class which handles rendering the Method component
+
+- - SettingsContext
+- - - context.js - Manages the state of the entire application
 
 ### Setup
 

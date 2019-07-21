@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { SettingsContext } from '../../context/context';
 
 /**
  * Method class which renders simple input field for onChange event
  */
-export default class Method extends React.Component {
-  render() {
-    return (
-      <input
-        type="radio"
-        name="method"
-        value={this.props.requestMethod}
-        onChange={this.props.handleChange}
-      />
-    );
-  }
+function Method(props) {
+  const state = useContext(SettingsContext);
+
+
+  return (
+    <input
+      type="radio"
+      name="method"
+      value={props.requestMethod}
+      onChange={state.handleChange}
+    />
+  );
 }
+
+export default Method;
 
 
 
